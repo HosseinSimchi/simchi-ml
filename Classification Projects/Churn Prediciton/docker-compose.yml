@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./IT_customer_churn.csv:/app/IT_customer_churn.csv
