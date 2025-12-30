@@ -1,0 +1,13 @@
+packaging
+autoviz
+pycaret[full]
+pandas
+seaborn
+numpy
+matplotlib
+scikit-learn
+jupyter
+plotly
+nbconvert
+xgboost
+ydata-profiling
