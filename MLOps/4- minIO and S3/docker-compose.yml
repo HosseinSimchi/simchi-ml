@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  minio1:
+    image: quay.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: simchi
+      MINIO_ROOT_PASSWORD: Hossein!7175
+    volumes:
+      - ./data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  model-updater:
+    build: .
+    depends_on:
+      minio1:
+        condition: service_healthy
+    environment:
+      MINIO_ENDPOINT: minio1:9000
+      MINIO_ACCESS_KEY: simchi
+      MINIO_SECRET_KEY: Hossein!7175
+      MINIO_BUCKET: tfmodels
+      MODEL_PATH: models/tfmodels.keras
+      OBJECT_NAME: tfmodels.keras

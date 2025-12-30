@@ -1,0 +1,9 @@
+services:
+  trainer:
+    container_name: trainer
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - "./data:/data"
+      - "./models:/models"
