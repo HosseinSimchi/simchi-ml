@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy notebook and data
 COPY stackoverflow-2022-salary-prediction.ipynb .
-COPY survey_results_public.csv .
+COPY ./data/survey_results_public.csv .
 
 # Run notebook and export output
 EXPOSE 8888
