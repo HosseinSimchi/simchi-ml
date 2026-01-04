@@ -18,7 +18,7 @@
 - ###### `python -m pip install dvc_s3`
 - ###### `python -m dvc remote add minio s3://datastorage`
   - ###### minio is a custom name for remote repository. we add all data using that name.
-- ###### `python -m dvc remote modify minio endpointurl http://localhost:9000
+- ###### `python -m dvc remote modify minio endpointurl http://localhost:9000`
   - ###### `endpoint-url` or `endpointurl`
 - ###### Setting username and password to access minIO
   - ###### `python -m dvc remote modify --local minio access_key_id simchi`

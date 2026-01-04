@@ -1,0 +1,3 @@
+['remote "minio"']
+    url = s3://datastorage
+    endpointurl = https://minio-console.hosseinsimchi.com/
