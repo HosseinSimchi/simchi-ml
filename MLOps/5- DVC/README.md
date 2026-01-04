@@ -30,4 +30,11 @@
 - ###### If someone else wants to download the data:
   - ###### Before using the below command, we need to Setting username and password using the mentioned commands
   - ###### `python -m dvc pull -r minio`
+- ###### اگر که داده ها تغییر میکنند باید اونو به کنترل ورژن داده ها اعلام کنیم
+  - ###### `pyhthon -m dvc add ./data/cleaned_dataset.csv`
+  - ###### `git add .`
+  - ###### `python -m dvc push -r minio`
+  - ###### Someone else should do these steps
+    - ###### `git pull origin master`
+    - ###### `python -m dvc pull -r minio`
 
