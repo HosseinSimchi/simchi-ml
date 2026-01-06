@@ -1,5 +1,0 @@
-['remote "minio"']
-    url = s3://datastorage
-    endpointurl = https://minio.hosseinsimchi.com
-    ssl_verify = false
-    region = us-east-1

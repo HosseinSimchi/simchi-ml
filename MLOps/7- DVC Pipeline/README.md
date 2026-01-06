@@ -98,16 +98,16 @@
 
 ###### ADD stages to DVC
 
-- ###### 1- `python3 -m dvc stage add -n split -d data/cleaned_dataset.csv -d src/split.py -o temp_data/X_train.csv -o temp_data/X_test.csv -o temp_data/y_train.csv -o temp_data/y_test.csv python src/split.py`
+- ###### 1- `python3 -m dvc stage add -n split -d data/cleaned_dataset.csv -d src/split.py -o temp_data/X_train.csv -o temp_data/X_test.csv -o temp_data/y_train.csv -o temp_data/y_test.csv python3 src/split.py`
 
   - ###### After running this command, the `dvc.yml` will be generated.
   - ###### -n `split` is the custom name for the first stage
   - ###### -d `data/cleaned_dataset.csv` is the path of dataset for input of the file
   - ###### -d `src/split.py` is the input .py file
 
-- ###### 2- `python3 -m dvc stage add -n preprocessing -d temp_data/X_train.csv -d temp_data/X_test.csv -d src/preprocess.py -o temp_data/X_train_pre.csv -o temp_data/X_test_pre.csv python src/preprocess.py`
+- ###### 2- `python3 -m dvc stage add -n preprocessing -d temp_data/X_train.csv -d temp_data/X_test.csv -d src/preprocess.py -o temp_data/X_train_pre.csv -o temp_data/X_test_pre.csv python3 src/preprocess.py`
 
-- ###### 3- `python3 -m dvc stage add -n train -d temp_data/X_train_pre.csv -d temp_data/X_test_pre.csv -d temp_data/y_train.csv -d temp_data/y_test.csv -d src/train.py -o models/tfmodel.keras -M temp_data/metrics.json python src/train.py`
+- ###### 3- `python3 -m dvc stage add -n train -d temp_data/X_train_pre.csv -d temp_data/X_test_pre.csv -d temp_data/y_train.csv -d temp_data/y_test.csv -d src/train.py -o models/tfmodel.keras -M temp_data/metrics.json python3 src/train.py`
   - ###### -M metrics.json --> متریک هارو ذخیره میکنه
 
 - ###### 4- `python -m dvc repro`
