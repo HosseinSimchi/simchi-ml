@@ -29,7 +29,6 @@ jobs:
 
   train:
     runs-on: ubuntu-latest
-    # needs: test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -44,6 +43,7 @@ jobs:
           python -m pip install pandas
           python -m pip install scikit-learn
           python -m pip install tensorflow
+          python -m pip install dvc  # Add DVC installation here
 
       - name: Train model
         run: |
