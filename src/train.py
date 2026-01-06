@@ -5,6 +5,8 @@ from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense
 from sklearn.metrics import accuracy_score
 import json
+import os
+from pathlib import Path
 
 X_train = pd.read_csv('temp_data/X_train_pre.csv', header=None)
 X_test = pd.read_csv('temp_data/X_test_pre.csv', header=None)
@@ -42,5 +44,7 @@ metrics = {
 
 with open("temp_data/metrics.json", "w") as f:
   json.dump(metrics, f, indent=4)
-
+  
+model_dir = 'models'
+Path(model_dir).mkdir(parents=True, exist_ok=True)
 model.save('models/tfmodel.keras')
