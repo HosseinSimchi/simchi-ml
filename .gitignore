@@ -1,7 +1,6 @@
 dataset/
 test/
 model_outputs/
-models/
 tfmodel.*
 MLOps/1- ML Pipeline in Docker/data
 MLOps/3- Github actions and CD-CD/data
