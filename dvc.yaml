@@ -1,0 +1,33 @@
+stages:
+  split:
+    cmd: python src/split.py
+    deps:
+    - data/cleaned_dataset.csv
+    - src/split.py
+    outs:
+    - temp_data/X_test.csv
+    - temp_data/X_train.csv
+    - temp_data/y_test.csv
+    - temp_data/y_train.csv
+  preprocessing:
+    cmd: python src/preprocess.py
+    deps:
+    - src/preprocess.py
+    - temp_data/X_test.csv
+    - temp_data/X_train.csv
+    outs:
+    - temp_data/X_test_pre.csv
+    - temp_data/X_train_pre.csv
+  train:
+    cmd: python src/train.py
+    deps:
+    - src/train.py
+    - temp_data/X_test_pre.csv
+    - temp_data/X_train_pre.csv
+    - temp_data/y_test.csv
+    - temp_data/y_train.csv
+    outs:
+    - models/tfmodel.keras
+    metrics:
+    - temp_data/metrics.json:
+        cache: false

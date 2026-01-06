@@ -40,8 +40,9 @@
   X_test = scaler.transform(X_test)
 
   # We use savetxt because the X_train and X_test are nparray
-  numpy.savetxt('temp_data/X_train.csv',X_train, delimiter=",")
-  numpy.savetxt('temp_data/X_test.csv',X_test, delimiter=",")
+  # عمدا با نام متفاوتی ذخیره میکنیم که بعدا در تعریف استیج به مشکل برنخوریم
+  numpy.savetxt('temp_data/X_train_pre.csv',X_train, delimiter=",")
+  numpy.savetxt('temp_data/X_test_pre.csv',X_test, delimiter=",")
   ```
 
 - ###### `src/train.py`
@@ -53,9 +54,10 @@
   from tensorflow.keras.models import Sequential, load_model
   from tensorflow.keras.layers import Dense
   from sklearn.metrics import accuracy_score
+  import json
 
-  X_train = pd.read_csv('temp_data/X_train.csv', header=None)
-  X_test = pd.read_csv('temp_data/X_test.csv', header=None)
+  X_train = pd.read_csv('temp_data/X_train_pre.csv', header=None)
+  X_test = pd.read_csv('temp_data/X_test_pre.csv', header=None)
 
   y_train = pd.read_csv('temp_data/y_train.csv')
   y_test = pd.read_csv('temp_data/y_test.csv')
@@ -83,5 +85,32 @@
   test_loss, test_accuracy = model.evaluate(X_test, y_test)
   print(f"Test Loss: {test_loss}, Test Accuracy: {test_accuracy}")
 
+  metrics = {
+    "test_loss": test_loss,
+    "test_accuracy": test_accuracy
+  }
+
+  with open("temp_data/metrics.json", "w") as f:
+    json.dump(metrics, f, indent=4)
+
   model.save('models/tfmodel.keras')
   ```
+
+###### ADD stages to DVC
+
+- ###### 1- `python3 -m dvc stage add -n split -d data/cleaned_dataset.csv -d src/split.py -o temp_data/X_train.csv -o temp_data/X_test.csv -o temp_data/y_train.csv -o temp_data/y_test.csv python src/split.py`
+
+  - ###### After running this command, the `dvc.yml` will be generated.
+  - ###### -n `split` is the custom name for the first stage
+  - ###### -d `data/cleaned_dataset.csv` is the path of dataset for input of the file
+  - ###### -d `src/split.py` is the input .py file
+
+- ###### 2- `python3 -m dvc stage add -n preprocessing -d temp_data/X_train.csv -d temp_data/X_test.csv -d src/preprocess.py -o temp_data/X_train_pre.csv -o temp_data/X_test_pre.csv python src/preprocess.py`
+
+- ###### 3- `python3 -m dvc stage add -n train -d temp_data/X_train_pre.csv -d temp_data/X_test_pre.csv -d temp_data/y_train.csv -d temp_data/y_test.csv -d src/train.py -o models/tfmodel.keras -M temp_data/metrics.json python src/train.py`
+  - ###### -M metrics.json --> متریک هارو ذخیره میکنه
+
+- ###### 4- `python -m dvc repro`
+- ###### 5- Everyone pull the changes should do the previous command
+- ###### 6- استج هایی که تغییری نکرده اند در صورت ران شدن دستور شماره چهارم تغییری ایجاد نمیشه یا به عبارتی دیگر در هربار اجرای دستورچهارم تمامی استیت ها کش می شوند
+- ###### 7- Add the fourth command to the `ci.yml` to do these steps when user push codes on the GITHUB (TO the Train model stage)
