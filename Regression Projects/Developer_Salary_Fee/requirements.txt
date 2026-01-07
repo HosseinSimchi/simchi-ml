@@ -2,6 +2,7 @@ packaging
 autoviz
 pycaret[full]
 pandas
+kaleido==0.2.1
 seaborn
 numpy
 matplotlib
