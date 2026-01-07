@@ -4,3 +4,4 @@ model_outputs/
 MLOps/1- ML Pipeline in Docker/data
 MLOps/3- Github actions and CD-CD/datamodels/tfmodel.keras
 models/tfmodel.keras
+data/
